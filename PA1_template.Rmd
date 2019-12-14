@@ -44,7 +44,7 @@ steps_per_day <- aggregate(steps ~ date, data, FUN=sum)
 
 ##Create histogram of total steps per interval
 
-```{r echo=FALSE }
+```{r  }
 library(ggplot2)
 g <- ggplot(steps_per_day, aes(x=steps, fill="red" ))
 g+ geom_histogram(binwidth=600, col="black") + labs(x="Totals of Steps per Day", 
@@ -70,7 +70,7 @@ steps_per_interval <- aggregate(steps ~ interval, data, FUN=mean)
 ```
 ##Here is a time plot seriestime series of the 5-minute intervals and the average number of steps taken, averaged across all days.
 
-```{r echo=FALSE}
+```{r }
 g1 <- ggplot(steps_per_interval, aes(interval, steps)) 
 
 g1 + geom_line(col="blue") + labs(x="5 Minute Intervals", y="Average Steps", 
@@ -87,7 +87,7 @@ x <-steps_per_interval[which.max(steps_per_interval$steps), ]
 
 
 #*Imputing missing values*
-```{r val=FALSE}
+```{r }
 total_NA <- sum(is.na(data_full))
 ```
 ###**The total number of NAs is `r total_NA`.**
@@ -99,7 +99,7 @@ data_full[is.na(data_full)] = 0
 ```
  
 ##Here is a histogram of the total number of steps taken each day with zeros in place of NAs
-```{r echo=FALSE}
+```{r }
 data_full_steps<- aggregate(steps ~ date, data_full, FUN=sum)
 
 g2 <- ggplot(data_full_steps, aes(x=steps))
@@ -137,7 +137,7 @@ steps_per_interval_week <- aggregate(steps ~ interval, data_week, FUN=mean)
 steps_per_interval_weekend <- aggregate(steps ~ interval, data_weekend, FUN=mean)
 ```
 ##Here is a panel plot containing a time series plot of the 5-minute interval and the average number of steps taken, averaged across all weekday days or weekend days 
-```{r echo=FALSE}
+```{r }
 g3 <- ggplot(steps_per_interval_week, aes(x=interval, y=steps))
 g3 <-g3 + geom_line(col="blue") + labs(x="5 Minute Intervals", y="Average Steps", 
                                           title="Week Day Average # of Steps Over All Intervals")       

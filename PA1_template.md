@@ -57,6 +57,15 @@ steps_per_day <- aggregate(steps ~ date, data, FUN=sum)
 
 ##Create histogram of total steps per interval
 
+
+```r
+library(ggplot2)
+g <- ggplot(steps_per_day, aes(x=steps, fill="red" ))
+g+ geom_histogram(binwidth=600, col="black") + labs(x="Totals of Steps per Day", 
+                                       title="Histogram of Steps per Day") + 
+                                        theme(legend.position = "none")
+```
+
 ![](PA1_template_files/figure-html/unnamed-chunk-3-1.png)<!-- -->
 
 
@@ -77,6 +86,14 @@ avg <-round(mean(steps_per_day$steps))
 steps_per_interval <- aggregate(steps ~ interval, data, FUN=mean)
 ```
 ##Here is a time plot seriestime series of the 5-minute intervals and the average number of steps taken, averaged across all days.
+
+
+```r
+g1 <- ggplot(steps_per_interval, aes(interval, steps)) 
+
+g1 + geom_line(col="blue") + labs(x="5 Minute Intervals", y="Average Steps", 
+                        title="Average # of Steps Over All Intervals")       
+```
 
 ![](PA1_template_files/figure-html/unnamed-chunk-6-1.png)<!-- -->
 
@@ -105,6 +122,16 @@ data_full[is.na(data_full)] = 0
 ```
  
 ##Here is a histogram of the total number of steps taken each day with zeros in place of NAs
+
+```r
+data_full_steps<- aggregate(steps ~ date, data_full, FUN=sum)
+
+g2 <- ggplot(data_full_steps, aes(x=steps))
+g2 + geom_histogram(binwidth = 800, fill="blue") + labs(x="Totals of Steps per Day", 
+                                          title="Histogram of Steps per Day with no NAs") + 
+        theme(legend.position = "none")
+```
+
 ![](PA1_template_files/figure-html/unnamed-chunk-10-1.png)<!-- -->
 ##Find average and median steps with no NAs
 
@@ -165,4 +192,16 @@ steps_per_interval_week <- aggregate(steps ~ interval, data_week, FUN=mean)
 steps_per_interval_weekend <- aggregate(steps ~ interval, data_weekend, FUN=mean)
 ```
 ##Here is a panel plot containing a time series plot of the 5-minute interval and the average number of steps taken, averaged across all weekday days or weekend days 
+
+```r
+g3 <- ggplot(steps_per_interval_week, aes(x=interval, y=steps))
+g3 <-g3 + geom_line(col="blue") + labs(x="5 Minute Intervals", y="Average Steps", 
+                                          title="Week Day Average # of Steps Over All Intervals")       
+g4 <- ggplot(steps_per_interval_weekend, aes(x=interval, y=steps))
+g4 <-g4 + geom_line(col="green") + labs(x="5 Minute Intervals", y="Average Steps", 
+                                 title="Weekend Average # of Steps Over All Intervals")       
+
+grid.arrange(g3, g4, nrow=2, ncol=1)
+```
+
 ![](PA1_template_files/figure-html/unnamed-chunk-13-1.png)<!-- -->
